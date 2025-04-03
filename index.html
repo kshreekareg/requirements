@@ -165,32 +165,100 @@
   </div>
 </footer>
   <script>
-	  
-	    document.getElementById('submitbtn').addEventListener("click",function(){
-		this.disabled = true;
-		    
-	    });
-	  
-    document.getElementById('tutorForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      var formData = new FormData(this);
+  document.getElementById('tutorForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
 
-      fetch('https://script.google.com/macros/s/AKfycbz8KsaragjYBNPdMtEXn5wkeAv48FCQvZHkJW2FVznXAkQMJ8lJwZXipkmUlsCYnEyd/exec', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.text())
-      .then(response => {
-        document.getElementById('responseMessage').innerHTML = `<div class="alert alert-success">Form submitted successfully! Redirecting...</div>`;
-        setTimeout(function() {
-          window.location.href = 'response.html'; 
-        }, 2000);
-      })
-      .catch(error => {
-        document.getElementById('responseMessage').innerHTML = `<div class="alert alert-danger">Error: ${error}</div>`;
-      });
+    let valid = true;
+    let errorMessages = [];
+
+    // Get form elements
+    let fullName = document.getElementById('firstName').value.trim();
+    let gender = document.getElementById('gen').value;
+    let email = document.getElementById('email').value.trim();
+    let experience = document.getElementById('experience').value;
+    let qualification = document.getElementById('qualification').value.trim();
+    let location = document.getElementById('location').value.trim();
+    let age = document.getElementById('age').value;
+    let mobile = document.getElementById('mobile').value.trim();
+    let subject = document.getElementById('subject').value.trim();
+    let lang = document.getElementById('lang').value.trim();
+
+    // Regex patterns
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let mobilePattern = /^\d{10}$/;
+
+    // Validation logic
+    if (fullName === "") {
+      errorMessages.push("Full Name is required.");
+      valid = false;
+    }
+    if (gender === "") {
+      errorMessages.push("Please select a gender.");
+      valid = false;
+    }
+    if (!emailPattern.test(email)) {
+      errorMessages.push("Enter a valid email address.");
+      valid = false;
+    }
+    if (experience === "") {
+      errorMessages.push("Please select experience.");
+      valid = false;
+    }
+    if (qualification === "") {
+      errorMessages.push("Qualification is required.");
+      valid = false;
+    }
+    if (location === "") {
+      errorMessages.push("City & State are required.");
+      valid = false;
+    }
+    if (age === "" || age < 18) {
+      errorMessages.push("Age must be 18 or older.");
+      valid = false;
+    }
+    if (!mobilePattern.test(mobile)) {
+      errorMessages.push("Enter a valid 10-digit mobile number.");
+      valid = false;
+    }
+    if (subject === "") {
+      errorMessages.push("Preferred Subject is required.");
+      valid = false;
+    }
+    if (lang === "") {
+      errorMessages.push("Class Language Mode is required.");
+      valid = false;
+    }
+
+    // Display errors or submit form
+    let responseDiv = document.getElementById('responseMessage');
+    if (!valid) {
+      responseDiv.innerHTML = `<div class="alert alert-danger">${errorMessages.join("<br>")}</div>`;
+      return;
+    }
+
+    // Disable button to prevent double submission
+    document.getElementById('submitbtn').disabled = true;
+
+    // Proceed with form submission
+    let formData = new FormData(this);
+    fetch('https://script.google.com/macros/s/AKfycbz8KsaragjYBNPdMtEXn5wkeAv48FCQvZHkJW2FVznXAkQMJ8lJwZXipkmUlsCYnEyd/exec', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.text())
+    .then(response => {
+      responseDiv.innerHTML = `<div class="alert alert-success">Form submitted successfully! Redirecting...</div>`;
+      setTimeout(function() {
+        window.location.href = 'response.html';
+      }, 2000);
+    })
+    .catch(error => {
+      responseDiv.innerHTML = `<div class="alert alert-danger">Error: ${error}</div>`;
+      document.getElementById('submitbtn').disabled = false;
     });
-  </script>
+  });
+</script>
+
   
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
