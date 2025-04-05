@@ -132,8 +132,8 @@
           <td><input type="number" class="form-control" id="age" name="age" min="18" placeholder="Enter Age"></td>
         </tr>
         <tr>
-          <td>Mobile Number (Optional)</td>
-          <td><input type="text" class="form-control" id="mobile" name="mobile" pattern="^\d{10}$" title="Enter a valid 10-digit number" placeholder="Enter Mobile Number"></td>
+          <td>Mobile Number</td>
+          <td><input type="text" class="form-control" id="mobile" name="mobile" required pattern="^\d{10}$" title="Enter a valid 10-digit number" placeholder="Enter Mobile Number"></td>
         </tr>
         <tr>
           <td>Preferred Subject</td>
@@ -201,7 +201,7 @@
   if (qualification === "") errorMessages.push("Qualification is required.");
   if (location === "") errorMessages.push("City & State are required.");
   if (age !== "" && age < 18) errorMessages.push("Age must be 18 or older.");
-  if (mobile !== "" && !mobilePattern.test(mobile)) errorMessages.push("Enter a valid 10-digit mobile number.");
+  if (mobile === "" || !mobilePattern.test(mobile)) errorMessages.push("Enter a valid 10-digit mobile number.");
   if (subject === "") errorMessages.push("Preferred Subject is required.");
   if (lang === "") errorMessages.push("Class Language Mode is required.");
 
