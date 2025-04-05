@@ -122,11 +122,11 @@
           <td><input type="text" class="form-control" id="location" name="location" required placeholder="Enter City & State"></td>
         </tr>
         <tr>
-          <td>Age</td>
+          <td>Age (Optional)</td>
           <td><input type="number" class="form-control" id="age" name="age" min="18" required placeholder="Enter Age"></td>
         </tr>
         <tr>
-          <td>Mobile Number</td>
+          <td>Mobile Number (Optional)</td>
           <td><input type="text" class="form-control" id="mobile" name="mobile" required pattern="^\d{10}$" title="Enter a valid 10-digit number" placeholder="Enter Mobile Number"></td>
         </tr>
         <tr>
@@ -156,7 +156,7 @@
   </div>
 <footer class="bg-dark text-white text-center p-3 mt-4">
   <div class="container">
-    <p class="mb-1">&copy; 2024 Kshreekar Educational Groups. All Rights Reserved.</p>
+    <p class="mb-1">&copy; 2025 Kshreekar Educational Groups. All Rights Reserved.</p>
     <p>
       <a href="privacy.html" target="_blank" class="text-white mx-2">Privacy Policy</a> |
       <a href="terms.html" target="_blank" class="text-white mx-2">Terms & Conditions</a> |    
@@ -212,11 +212,11 @@
       errorMessages.push("City & State are required.");
       valid = false;
     }
-    if (age === "" || age < 18) {
+    if (age !== "" && age < 18) {
       errorMessages.push("Age must be 18 or older.");
       valid = false;
     }
-    if (!mobilePattern.test(mobile)) {
+    if (mobile !== "" && !mobilePattern.test(mobile)) {
       errorMessages.push("Enter a valid 10-digit mobile number.");
       valid = false;
     }
